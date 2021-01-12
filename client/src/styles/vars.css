@@ -1,0 +1,9 @@
+:root {
+	--header-height: 3rem;
+	--grey0: rgb( 167, 167, 167 );
+	--grey1: rgb( 199, 199, 199 );
+	--grey2: rgb( 231, 231, 231 );
+	--grey-a0: rgba( 29, 29, 29, 0.6 );
+	--red0: rgb( 111, 29, 29 );
+	--red-a0: rgb( 111, 29, 29, 0.6 );
+}
