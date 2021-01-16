@@ -37,11 +37,16 @@
 	margin-left: 1rem;
 }
 
+.header a.active {
+	color: var( --red1 );
+	text-shadow: 1px 1px 3px black;
+}
+
 .header a, .header .tab {
 	color: var( --grey0 );
 	text-decoration: none;
 	font-size: 0.85rem;
-	font-family: "Segoe UI", Arial, sans-serif;
+	font-family: var( --font-header );
 	font-weight: 600;
 	letter-spacing: 0.03rem;
 	text-transform: uppercase;
@@ -54,6 +59,10 @@
 
 .header a:hover {
 	color: var( --grey2 );
+}
+
+.header a.active:hover {
+	color: var( --red1 )
 }
 
 .header .tab {

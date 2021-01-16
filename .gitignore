@@ -3,3 +3,5 @@ node_modules
 client/build
 server/prod
 /images
+*.sublime-project
+*.sublime-workspace

@@ -1,8 +1,12 @@
 body {
 	margin: 0px;
-	font-family: Arial;
+	font-family: var( --font-default );
 	font-weight: normal;
 	color: white;
+}
+
+body * {
+	outline: none;
 }
 
 .background {
@@ -83,4 +87,9 @@ body {
 
 .not_found404 {
 	font-size: 2rem;
+}
+
+.implict_input {
+	background-color: none;
+	border: none;
 }

@@ -1,0 +1,81 @@
+.auth_form {
+	padding: 1rem;
+	border-radius: 1rem;
+	background-color: white;
+	display: flex;
+	flex-direction: column;
+	min-width: 20rem;
+}
+
+.auth_form div {
+	color: var( --red0 );
+}
+
+.auth_form input::placeholder {
+	color: var( --grey1 );
+}
+
+.auth_form button {
+	cursor: pointer;
+}
+
+.auth_form .overlay_header {
+	margin: 0 auto;
+	font-family: Verdana, sans-serif;
+	font-size: 1.3rem;
+}
+
+.auth_form .input, .auth_form .end_button {
+	margin-top: 0.4rem;
+	padding: 0.67rem;
+	border-radius: 1.2rem;
+	max-height: 2.4rem;
+	width: 100%;
+}
+
+.auth_form .input {
+	background-color: white;
+	color: var( --red0 );
+	box-sizing: border-box;
+	border: 1px solid black;
+}
+
+.auth_form .end_button {
+	width: 100%;
+	background-color: var( --red0 );
+	font-family: var( --font-great );
+	border: none;
+	color: white;
+}
+
+.auth_form .input .implict_input {
+	color: inherit;
+	flex: 1;
+}
+
+.auth_form div.input {
+	align-items: center;
+	display: flex;
+}
+
+.auth_form .look_pass {
+	width: 1rem;
+	height: 1rem;
+	border: none;
+	border-radius: none;
+	background-color: rgba( 0, 0, 0, 0 );
+	background-image: url( "https://i.imgur.com/fh2RoUT.png" );
+	background-position: 50% 50%;
+	background-repeat: no-repeat;
+	background-size: 120% auto;
+}
+
+.auth_form .look_pass.visible {
+	background-image: url( "https://i.imgur.com/39cpXqb.png" );
+}
+
+.auth_form .error_warning {
+	margin: 0rem 0.7rem;
+	color: var( --red2 );
+	min-height: 1.4rem;
+}

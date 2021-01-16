@@ -4,8 +4,11 @@ import Header from "./Header"
 import Home from "./Home"
 import Donate from "./Donate"
 import Anime from "./Anime"
+import Login from "./auth/Login"
+import Registration from "./auth/Registration"
 import NotFound from "./NotFound"
-import HereWillBe from "./patterns/HereWillBe"	
+import HereWillBe from "./patterns/HereWillBe"
+import "../styles/components/auth.css"
 
 const ZXC: React.FC = () => {
 	const willBePaths: Array<{path: string, text: string, imgStyle?: TextOverlayImageStyle }> = [
@@ -13,14 +16,6 @@ const ZXC: React.FC = () => {
 		{ path: "/blog", text: "блог, просто чтобы был" },
 		{ path: "/what", text: "нечто", imgStyle: "img3" },
 	]
-
-	console.log( "api test" )
-
-	fetch( "/api/test" )
-		.then( result => result.json() )
-		.then( result => {
-			console.log( result[0] )
-		} )
 
 	return ( 
 		<div>
@@ -30,6 +25,8 @@ const ZXC: React.FC = () => {
 				<Route exact path="/donate" component={Donate} />
 				<Route exact path="/anime" component={Anime} />
 				<Route exact path="/" component={Home}  />
+				<Route exact path="/login" component={Login} />
+				<Route exact path="/registration" component={Registration} />
 				{
 					willBePaths.map( ( v, i ) => {
 						return (
