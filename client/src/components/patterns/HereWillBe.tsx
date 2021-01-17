@@ -2,7 +2,12 @@ import React from "react"
 import ScreenCenter from "./ScreenCenter"
 import { RandomInt } from "../../scripts/utils/math"
 
-const HereWillBe: React.FC<{text: string, imgStyle: TextOverlayImageStyle | undefined }> = props => {
+interface HereWillBeProps {
+	text: string,
+	imgStyle: TextOverlayImageStyle | undefined
+}
+
+const HereWillBe: React.FC<HereWillBeProps> = props => {
 	let className = "text_overlay"
 
 	if ( props.imgStyle ) {

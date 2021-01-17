@@ -1,8 +1,9 @@
 {
 	"scripts": {
+		"postinstall": "tsc -p .",
 		"start": "node prod/server.js",
 		"dev": "concurrently \"tsc -p . --watch\" \"nodemon prod/server.js\"",
-		"build": "tsc -p . --watch"
+		"build": "tsc -p ."
 	},
 	"dependencies": {
 		"express": "^4.17.1",

@@ -1,3 +1,8 @@
+interface ServiceSettings {
+	express: express
+	db: db
+}
+
 interface ServerSettings {
 	PORT: number
 	DB_HOST: string

@@ -1,25 +1,16 @@
-import express, { Request, Response } from "express"
+import { init as express } from "./services/express"
+import { init as database } from "./services/database"
+import { init as auth } from "./services/auth"
+import { init as server } from "./services/server"
 import http from "http"
 import bodyParser from "body-parser"
 import mySql from "mysql2"
 
-( () => {
-	const serverSettings = require( "../server_settings.js" ) as ServerSettings
-	const expressApp = express()
-	expressApp.use( bodyParser() )
+import { init_services as init } from "./utils/init_services"
 
-	const databasePool = mySql.createPool( {
-		host: serverSettings.DB_HOST,
-		user: serverSettings.DB_USER,
-		password: serverSettings.DB_PASS,
-		database: serverSettings.DB_NAME
-	} )
-
-	expressApp.get( "/api/test", ( req: Request, res: Response ) => {
-		res.send( "[\"trash\"]" )
-		res.end()
-	} )
-
-	const server = http.createServer( expressApp )
-	server.listen( serverSettings.PORT )
-} )()
+init( [
+	express,
+	database,
+	auth,
+	server
+] )

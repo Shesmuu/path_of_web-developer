@@ -4,7 +4,7 @@
 	background-color: white;
 	display: flex;
 	flex-direction: column;
-	min-width: 20rem;
+	width: 20rem;
 }
 
 .auth_form div {
@@ -77,5 +77,6 @@
 .auth_form .error_warning {
 	margin: 0rem 0.7rem;
 	color: var( --red2 );
-	min-height: 1.4rem;
+	min-height: 1rem;
+	font-size: 0.85rem;
 }
