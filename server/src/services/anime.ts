@@ -1,5 +1,6 @@
-import https from "https"
+import { ServiceSettings } from "../types/service_settings"
 import { Request, Response } from "express"
+import https from "https"
 
 interface ListAnime {
 	score: number
@@ -9,10 +10,10 @@ interface ListAnime {
 }
 
 const create_anime_list = async ( settings: ServiceSettings ) => {
-	https.get( "https://api.jikan.moe/v3/user/shesmu/animelist", ( res ) => {
+	const request = https.get( "https://api.jikan.moe/v3/user/shesmu/animelist", ( res ) => {
 		let body = ""
 
-		res.on( "data", ( chunk ) => {
+		res.on( "data", ( chunk: string ) => {
 			body += chunk
 		} )
 	
@@ -24,7 +25,7 @@ const create_anime_list = async ( settings: ServiceSettings ) => {
 				if ( anime.score ) {
 					list.push( {
 						score: anime.score,
-						title: anime.title,
+						title: anime.title, 
 						mal: anime.url,
 						image: anime.image_url
 					} )
@@ -35,20 +36,22 @@ const create_anime_list = async ( settings: ServiceSettings ) => {
 				return b.score - a.score
 			} )
 
-			settings.animeList = list
+			settings.anime_list = list
 		} )
+	} ).on( "error", ( err ) => {
+		console.log( err ) 
 	} )
 }
 
 const init = ( settings: ServiceSettings ) => {
-	settings.animeList = []
+	settings.anime_list = []
 
 	create_anime_list( settings )
 
-	setInterval( () => create_anime_list( settings ), 300000 )
+	setInterval( () => create_anime_list( settings ), 30 * 60 * 1000 )
 
-	settings.express.get( "/api/anime", ( req: Request, res: Response ) => {
-		res.send( settings.animeList )
+	settings.express.get( "/api/anime_list", ( req: Request, res: Response ) => {
+		res.send( settings.anime_list )
 	} )
 }
 

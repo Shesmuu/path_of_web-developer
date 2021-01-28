@@ -1,3 +1,4 @@
+import { ServiceSettings } from "../types/service_settings"
 import http from "http"
 
 const server_settings = require( "../../server_settings.js" ) as ServerSettings

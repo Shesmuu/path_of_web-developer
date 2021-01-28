@@ -1,4 +1,5 @@
-import mysql from "mysql2"
+import { ServiceSettings } from "../types/service_settings"
+import mysql from "mysql2/promise"
 
 const server_settings = require( "../../server_settings.js" ) as ServerSettings
 
@@ -11,6 +12,4 @@ const init = ( settings: ServiceSettings ) => {
 	} )
 }
 
-export {
-	init
-}
+export { init }

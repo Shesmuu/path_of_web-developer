@@ -28,7 +28,7 @@ class Anime extends React.Component {
 	}
 
 	async InitList() {
-		const res = await fetch( "/api/anime" )
+		const res = await fetch( "/api/animelist" )
 		const list = await res.json()
 
 		this.setState( { list: list } )
@@ -40,8 +40,8 @@ class Anime extends React.Component {
 
 	render() {
 		return (
-			<div>
-				<div className="anime">Мои оценочки с myanimelist.net</div>
+			<div className="animelist">
+				<div>Мои оценочки с myanimelist.net</div>
 				{
 					this.state.list.map( ( a, i ) => <AnimeRow
 						key={i}

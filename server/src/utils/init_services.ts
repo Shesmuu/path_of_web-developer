@@ -1,3 +1,5 @@
+import { ServiceSettings } from "../types/service_settings"
+
 const init_services = ( services: Array<( settings: ServiceSettings ) => void> ) => {
 	const settings = {} as ServiceSettings
 
@@ -6,6 +8,4 @@ const init_services = ( services: Array<( settings: ServiceSettings ) => void> )
 	}
 }
 
-export {
-	init_services
-}
+export { init_services, ServiceSettings }

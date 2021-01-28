@@ -2,6 +2,8 @@
 	background-color: var( --grey-a0 );
 	border-bottom: var( --red0 ) solid 3px;
 	height: var( --header-height );
+	position: fixed;
+	width: 100%;
 }
 
 .header .link_home {

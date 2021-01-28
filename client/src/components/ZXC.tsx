@@ -17,6 +17,14 @@ const ZXC: React.FC = () => {
 		{ path: "/what", text: "нечто", imgStyle: "img3" },
 	]
 
+	fetch( "/api/auth/get_logged", {
+		method: "POST",
+		headers: {
+		  'Content-Type': 'application/json;charset=utf-8'
+		},
+		body: "KEKW"
+	} )
+
 	return ( 
 		<div>
 			<div className="background" />

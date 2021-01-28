@@ -43,10 +43,10 @@ class Registration extends React.Component {
 	}
 
 	async CheckLoginTaken( e: React.FormEvent<HTMLInputElement> ) {
-		const res = await fetch( "/api/auth/check_name", {
+		const res = await fetch( "/api/auth/is_name_taken", {
 			method: "POST",
 			headers: {
-			  'Content-Type': 'application/json;charset=utf-8'
+			  "Content-Type": "application/json;charset=utf-8"
 			},
 			body: JSON.stringify( { name: this.login } ),
 		} )
@@ -60,7 +60,7 @@ class Registration extends React.Component {
 			this.setState( { loginError: "Имя занято." } )
 		}
 
-		return data.taken
+		//return data.taken
 	}
 
 	CheckLogin(): boolean {
@@ -107,6 +107,8 @@ class Registration extends React.Component {
 		if ( !this.pass || !this.confrimPass ) {
 			return
 		}
+
+		const passHash = PasswordHash( this.pass )
 	}
 
 	render() {
