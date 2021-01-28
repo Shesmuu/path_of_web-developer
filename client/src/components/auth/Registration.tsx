@@ -1,8 +1,9 @@
+import AuthEnum from "../../types/enums/auth"
 import React from "react"
 import ScreenCenter from "../patterns/ScreenCenter"
 import PasswordInput from "./PasswordInput"
-import PasswordHash from "../../scripts/PasswordHash"
-import AuthEnum from "../../types/enums/auth"
+import { PasswordHash } from "../../util/math"
+import { Post } from "../../util/http"
 
 interface RegistrationState {
 	loginError: string
@@ -43,14 +44,7 @@ class Registration extends React.Component {
 	}
 
 	async CheckLoginTaken( e: React.FormEvent<HTMLInputElement> ) {
-		const res = await fetch( "/api/auth/is_name_taken", {
-			method: "POST",
-			headers: {
-			  "Content-Type": "application/json;charset=utf-8"
-			},
-			body: JSON.stringify( { name: this.login } ),
-		} )
-		const data = await res.json()
+		const data = await Post( "/api/auth/is_name_taken", { name: this.login } )
 
 		if ( data.name !== this.login ) {
 			return

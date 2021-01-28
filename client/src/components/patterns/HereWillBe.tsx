@@ -1,6 +1,6 @@
 import React from "react"
 import ScreenCenter from "./ScreenCenter"
-import { RandomInt } from "../../scripts/utils/math"
+import { RandomInt } from "../../util/math"
 
 interface HereWillBeProps {
 	text: string,

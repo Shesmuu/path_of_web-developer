@@ -1,6 +1,7 @@
 import { ServiceSettings } from "../types/service_settings"
 import { Request, Response } from "express"
 import { Connection } from "mysql2"
+import validate from "../validation/auth"
 
 interface LoggedData {
 	is_logged: boolean
@@ -75,8 +76,6 @@ const init = ( settings: ServiceSettings ) => {
 	express.post( "/api/auth/is_name_taken", async ( req: Request, res: Response ) => {
 		const taken = await is_name_taken( req.body.name, db )
 
-		console.log( "ahhah", taken )
-
 		res.send( { name: req.body.name, taken: taken } )
 	} )
 
@@ -98,6 +97,8 @@ const init = ( settings: ServiceSettings ) => {
 		
 		//get_logged( client_key, db, res )
 	} )
+
+	validate( settings )
 }
 
 export {

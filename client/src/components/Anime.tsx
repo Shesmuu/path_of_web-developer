@@ -1,4 +1,5 @@
 import React from "react"
+import { Get } from "../util/http"
 import "../styles/components/anime.css"
 
 interface AnimeRowProps {
@@ -28,8 +29,7 @@ class Anime extends React.Component {
 	}
 
 	async InitList() {
-		const res = await fetch( "/api/animelist" )
-		const list = await res.json()
+		const list = await Get( "/api/anime_list" )
 
 		this.setState( { list: list } )
 	}

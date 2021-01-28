@@ -5,9 +5,7 @@ const server_settings = require( "../../server_settings.js" ) as ServerSettings
 
 const init = ( settings: ServiceSettings ) => {
 	const server = http.createServer( settings.express )
-	server.listen( server_settings.PORT )
+	server.listen( server_settings.PORT, () => console.log( "Server is running" ) )
 }
 
-export {
-	init
-}
+export { init }

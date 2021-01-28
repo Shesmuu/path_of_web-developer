@@ -2,31 +2,6 @@ import { ServiceSettings } from "../types/service_settings"
 import { Request, Response } from "express"
 import { request_error } from "../utils/util"
 
-type PatternType = "number" | "string" | "array" | "kv"
-
-interface ValidatePattern {
-	type: PatternType
-	optional?: true
-}
-
-interface NumberPattern extends ValidatePattern {
-	length: number
-}
-
-interface StringPattern extends ValidatePattern {
-	length: number
-	pattern: RegExp
-}
-
-interface ArrayPattern extends ValidatePattern {
-	length: number
-	content_pattern: ValidatePattern
-}
-
-interface KVPattern extends ValidatePattern {
-	kv: { [key: string]: ValidatePattern }
-}
-
 const is_number_pattern = ( p: ValidatePattern ): p is NumberPattern => p.type === "number"
 const is_string_pattern = ( p: ValidatePattern ): p is StringPattern => p.type === "string"
 const is_array_pattern = ( p: ValidatePattern ): p is ArrayPattern => p.type === "array"
@@ -99,12 +74,14 @@ const init = ( settings: ServiceSettings ) => {
 		validations[url] = pattern
 	}
 
-	settings.express.use( ( req: Request, res: Response ) => {
+	settings.express.use( ( req: Request, res: Response, next ) => {
 		const pattern = validations[req.url]
 		
 		if ( pattern ) {
 			validate( pattern, req.body, res, [] )
 		}
+
+		next()
 	} )
 }
 
