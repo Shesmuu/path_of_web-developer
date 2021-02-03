@@ -1,11 +1,11 @@
 import { ServiceSettings } from "../types/service_settings"
 import express from "express"
-import bodyParser from "body-parser"
+import body_parser from "body-parser"
 
 const init = ( settings: ServiceSettings ) => {
 	settings.express = express()
-	settings.express.use( bodyParser.json() )
-	settings.express.use( bodyParser.urlencoded( { extended: true } ) )
+	settings.express.use( body_parser.json() )
+	settings.express.use( body_parser.urlencoded( { extended: true } ) )
 }
 
 export { init }

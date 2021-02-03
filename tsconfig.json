@@ -1,12 +1,15 @@
 {
 	"compilerOptions": {
-		"target": "es6",
+		"target": "es2017",
 		"module": "commonjs",
-		"outDir": "./prod",
-		"rootDir": "./src",
+		"outDir": "prod",
+		"rootDir": "src",
 		"strict": true,
 		"esModuleInterop": true,
 		"skipLibCheck": true,
 		"forceConsistentCasingInFileNames": true
-	}
+	},
+	"exclude": [
+		"client"
+	]
 }
