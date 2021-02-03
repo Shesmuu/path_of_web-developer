@@ -1,6 +1,5 @@
-import { ServiceSettings } from "../types/service_settings"
 import { Request, Response } from "express"
-import { request_error } from "../utils/util"
+import { request_error } from "../util/common"
 
 const is_number_pattern = ( p: ValidatePattern ): p is NumberPattern => p.type === "number"
 const is_string_pattern = ( p: ValidatePattern ): p is StringPattern => p.type === "string"
@@ -74,7 +73,7 @@ const init = ( settings: ServiceSettings ) => {
 		validations[url] = pattern
 	}
 
-	settings.express.use( ( req: Request, res: Response, next ) => {
+	settings.express.use( ( req: Request, res: Response, next: () => void ) => {
 		const pattern = validations[req.url]
 		
 		if ( pattern ) {

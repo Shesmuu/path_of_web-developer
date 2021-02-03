@@ -1,4 +1,3 @@
-import { ServiceSettings } from "../types/service_settings"
 import express from "express"
 import body_parser from "body-parser"
 

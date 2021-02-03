@@ -12,6 +12,7 @@ interface NumberPattern extends ValidatePattern {
 interface StringPattern extends ValidatePattern {
 	length: number
 	pattern?: RegExp
+	min_length?: number
 }
 
 interface ArrayPattern extends ValidatePattern {

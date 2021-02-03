@@ -1,5 +1,3 @@
-import { ServiceSettings } from "../types/service_settings"
-
 const is_name_taken: KVPattern = {
 	type: "kv",
 	kv: {

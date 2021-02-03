@@ -1,4 +1,3 @@
-import { ServiceSettings } from "../types/service_settings"
 import { Request, Response } from "express"
 import https from "https"
 

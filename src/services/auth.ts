@@ -1,4 +1,3 @@
-import { ServiceSettings } from "../types/service_settings"
 import { Request, Response } from "express"
 import { Connection } from "mysql2"
 import validate from "../validation/auth"

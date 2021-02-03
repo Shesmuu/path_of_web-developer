@@ -1,10 +1,17 @@
 interface ServerSettings {
-	PORT: number
-	DB_HOST: string
-	DB_PORT: number
-	DB_USER: string
-	DB_PASS: string
-	DB_NAME: string
+	port: number
+	db_host: string
+	db_port: number
+	db_user: string
+	db_pass: string
+	db_name: string
+}
+
+interface ServiceSettings {
+	express: Application
+	db: Connection
+	anime_list: ListAnime[]
+	validate: ( url: string, pattern: ValidatePattern ) => void
 }
 
 interface ListAnime {

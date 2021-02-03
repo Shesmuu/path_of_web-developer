@@ -1,6 +1,6 @@
-exports.PORT = 1337
-exports.DB_HOST = "localhost"
-exports.DB_PORT = 3306
-exports.DB_USER = "root"
-exports.DB_PASS = ""
-exports.DB_NAME = "path_of_web-developer"
+exports.port = 1337
+exports.db_host = "localhost"
+exports.db_port = 3306
+exports.db_user = "root"
+exports.db_pass = ""
+exports.db_name = "path_of_web-developer"
