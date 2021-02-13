@@ -15,6 +15,10 @@
 	color: var( --grey1 );
 }
 
+.auth_form input:invalid {
+	box-shadow: none;
+}
+
 .auth_form button {
 	cursor: pointer;
 }

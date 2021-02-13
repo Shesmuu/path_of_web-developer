@@ -30,7 +30,10 @@ const validate = ( pattern: ValidatePattern, something: any, res: Response, my_p
 	} else if ( is_string_pattern( pattern ) ) {
 		if ( t !== "string" ) {
 			request_error( res, invalid_type_msg, 400 )
-		} else if ( pattern.length !== -1 && something.length > pattern.length ) {
+		} else if (
+			( pattern.length !== -1 && something.length > pattern.length ) ||
+			( pattern.min_length && something.length < pattern.min_length )
+		) {
 			request_error( res, "Invalid string length, string: " + something, 400 )
 		}
 	} else if ( is_array_pattern( pattern ) ) {

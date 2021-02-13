@@ -12,68 +12,34 @@ interface AuthData {
 	pass_hash?: string
 }
 
-const is_valid_data = ( auth_data: AuthData, res: Response ) => {
-	const check = ( key: keyof AuthData, type: string, len: number, err: string ): boolean => {
-		const v = auth_data[key]
-
-		if ( v ) {
-			const str = v.toString()
-
-			if (
-				typeof( v ) !== type ||
-				!str ||
-				str.length > len
-			) {
-				res.status( 400 ).send( { error: err } )
-
-				return true
-			}
-		}
-
-		return false
-	}
-
-	if ( check( "name", "string", AuthEnum.name_len, "Invalid name" ) ) { return }
-	if ( check( "pass_hash", "string", AuthEnum.pass_hash_len, "Invalid password hash" ) ) { return }
-}
-
-const is_name_taken = async ( name: string, db: Connection ): Promise<boolean> => {
-	try {
-		const [taken] = await db.query( "select count(1) from `users` where lower(name)=lower(?)", [name] )
-
-		return taken[0]["count(1)"] > 0
-	} catch( err: unknown ) {
-		return true
-	}
-}
-
-const get_logged = async ( client_key: string | undefined, db: Connection, res: Response ) => {
-	let logged: LoggedData = {
-		is_logged: false
-	}
-
-	if ( client_key ) {
-		try {
-			const auth = await db.query( "select userid from `users` where auth_hash=(?)", [client_key] )[0]
-			
-			if ( auth ) {
-				const user = await db.query( "select * from `users` where userid=(?)", [auth] )[0]
-				logged = user
-				logged.is_logged = true
-			}
-		} catch( err: unknown ) {
-			logged.error = err
-		}
-	}
-
-	res.send( logged )
-}
-
 const init = ( settings: ServiceSettings ) => {
 	const { express, db } = settings
 
+	const is_name_taken = async ( name: string ) => {
+		const [[taken]] = await db.query( "select count(1) as 'count' from `users` where lower(name)=lower(?)", [name] )
+		return taken.count > 0
+	}
+
+	const get_logged = async ( client_key: string | undefined, res: Response ) => {
+		let logged: LoggedData = {
+			is_logged: false
+		}
+
+		if ( client_key ) {
+			const [[auth]] = await db.query( "select userid from `users` where auth_hash=(?)", [client_key] )
+				
+			if ( auth ) {
+				const [[user]] = await db.query( "select * from `users` where userid=(?)", [auth] )
+				logged = user
+				logged.is_logged = true
+			}
+		}
+
+		res.send( logged )
+	}
+
 	express.post( "/api/auth/is_name_taken", async ( req: Request, res: Response ) => {
-		const taken = await is_name_taken( req.body.name, db )
+		const taken = await is_name_taken( req.body.name )
 
 		res.send( { name: req.body.name, taken: taken } )
 	} )
@@ -82,8 +48,17 @@ const init = ( settings: ServiceSettings ) => {
 		
 	} )
 
-	express.post( "/api/auth/register", ( req: Request, res: Response ) => {
-		
+	express.post( "/api/auth/register", async ( req: Request, res: Response ) => {
+		if ( is_name_taken( req.body.name ) ) {
+
+		} else {
+			await db.query(
+				"insert into `users` ( `name`, `pass_hash`, `permissions` ) --\
+				values ( ?, ?, 0 ) --\
+				on duplicate key ignore `name` = `name`"
+				[req.body.name, req.body.pass_hash]
+			)
+		}
 	} )
 
 	express.post( "/api/auth/logout", () => {} )
@@ -100,6 +75,4 @@ const init = ( settings: ServiceSettings ) => {
 	validate( settings )
 }
 
-export {
-	init
-}
+export { init }

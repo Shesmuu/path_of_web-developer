@@ -4,7 +4,7 @@ export const Get = async ( url: string ) => {
 			"Content-Type": "application/x-www-form-urlencoded;charset=utf-8"
 		}
 	} )
-	const data = res.json()
+	const data = await res.json()
 
 	return data
 }

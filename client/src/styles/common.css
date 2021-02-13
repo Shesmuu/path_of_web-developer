@@ -21,20 +21,37 @@ body * {
 	background-image: url( "https://i.imgur.com/rc0TUm2.png" );
 }
 
-.screen_center {
+.screen_center, .screen_scrolling {
 	position: fixed;
 	top: 0;
 	left: 0;
 	bottom: 0;
 	right: 0;
+	margin-top: var( --header-height );
+}
+
+.screen_center {
 	display: flex;
 	align-items: center;
-	margin-top: var( --header-height );
 }
 
 .screen_center > .center {
 	margin: 0 auto;
 	margin-bottom: var( --header-height );
+}
+
+.screen_scrolling {
+	overflow-y: auto;
+	scroll-margin-right: 4px;
+}
+
+.screen_scrolling::-webkit-scrollbar {
+	width: 6px;
+}
+ 
+.screen_scrolling::-webkit-scrollbar-thumb {
+	border-radius: 3px;
+	background-color: var( --red1 );
 }
 
 .default_overlay {

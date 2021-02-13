@@ -9,37 +9,41 @@ interface ListAnime {
 }
 
 const create_anime_list = async ( settings: ServiceSettings ) => {
-	const request = https.get( "https://api.jikan.moe/v3/user/shesmu/animelist", ( res ) => {
-		let body = ""
+	try {
+		const request = https.get( "https://api.jikan.moe/v3/user/shesmu/animelist", ( res ) => {
+			let body = ""
 
-		res.on( "data", ( chunk: string ) => {
-			body += chunk
-		} )
-	
-		res.on( "end", () => {
-			const data = JSON.parse( body )
-			const list: ListAnime[] = []
-
-			for ( let anime of data.anime ) {
-				if ( anime.score ) {
-					list.push( {
-						score: anime.score,
-						title: anime.title, 
-						mal: anime.url,
-						image: anime.image_url
-					} )
-				}
-			}
-
-			list.sort( ( a: ListAnime, b: ListAnime ) => {
-				return b.score - a.score
+			res.on( "data", ( chunk: string ) => {
+				body += chunk
 			} )
+		
+			res.on( "end", () => {
+				const data = JSON.parse( body )
+				const list: ListAnime[] = []
 
-			settings.anime_list = list
+				for ( let anime of data.anime ) {
+					if ( anime.score ) {
+						list.push( {
+							score: anime.score,
+							title: anime.title, 
+							mal: anime.url,
+							image: anime.image_url
+						} )
+					}
+				}
+
+				list.sort( ( a: ListAnime, b: ListAnime ) => {
+					return b.score - a.score
+				} )
+
+				settings.anime_list = list
+			} )
+		} ).on( "error", ( err ) => {
+			console.log( err ) 
 		} )
-	} ).on( "error", ( err ) => {
-		console.log( err ) 
-	} )
+	} catch ( error: unknown ) {
+		console.log( "Bad api.jikan.moe request" )
+	}
 }
 
 const init = ( settings: ServiceSettings ) => {

@@ -1,4 +1,5 @@
 import React from "react"
+import ScreenCenter from "./patterns/ScreenCenter"
 import { Get } from "../util/http"
 import "../styles/components/anime.css"
 
@@ -14,12 +15,12 @@ interface AnimeState {
 }
 
 const AnimeRow: React.FC<AnimeRowProps> = props => (
-	<div className="W">
+	<div className="anime_row">
 		<a href={props.mal} rel="nofollow noopener noreferrer" target="_blank">
 			<img src={props.image} alt="" />
 		</a>
-		<div>{props.title}</div>
-		<div>{props.score}</div>
+		<div className="title">{props.title}</div>
+		<div className="score">{props.score}</div>
 	</div>
 )
 
@@ -40,7 +41,7 @@ class Anime extends React.Component {
 
 	render() {
 		return (
-			<div className="animelist">
+			<div className="anime_list screen_scrolling">
 				<div>Мои оценочки с myanimelist.net</div>
 				{
 					this.state.list.map( ( a, i ) => <AnimeRow

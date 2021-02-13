@@ -11,20 +11,19 @@ import HereWillBe from "./patterns/HereWillBe"
 import "../styles/components/auth.css"
 
 const ZXC: React.FC = () => {
-	const willBePaths: Array<{path: string, text: string, imgStyle?: TextOverlayImageStyle }> = [
+	const willBePaths: Array<{ path: string, text: string, imgStyle?: TextOverlayImageStyle }> = [
 		{ path: "/chat", text: "чат, которым я освою сокеты" },
 		{ path: "/blog", text: "блог, просто чтобы был" },
 		{ path: "/what", text: "нечто", imgStyle: "img3" },
 	]
 
 	return ( 
-		<div>
+		<div className="ZXC">
 			<div className="background" />
-			<Header />
 			<Switch>
+				<Route exact path="/" component={Home} />
 				<Route exact path="/donate" component={Donate} />
 				<Route exact path="/anime" component={Anime} />
-				<Route exact path="/" component={Home}  />
 				<Route exact path="/login" component={Login} />
 				<Route exact path="/registration" component={Registration} />
 				{
@@ -38,6 +37,7 @@ const ZXC: React.FC = () => {
 				}
 				<Route component={NotFound} />
 			</Switch>
+			<Header />
 		</div>
 	)
 }

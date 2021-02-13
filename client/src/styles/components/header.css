@@ -4,6 +4,8 @@
 	height: var( --header-height );
 	position: fixed;
 	width: 100%;
+	z-index: 200;
+	box-sizing: border-box;
 }
 
 .header .link_home {

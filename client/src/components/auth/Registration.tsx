@@ -1,23 +1,25 @@
-import AuthEnum from "../../types/enums/auth"
 import React from "react"
 import ScreenCenter from "../patterns/ScreenCenter"
 import PasswordInput from "./PasswordInput"
 import { PasswordHash } from "../../util/math"
 import { Post } from "../../util/http"
 
+const NAME_LENGTH_MIN = 4
+const NAME_LENGTH_MAX = 24
+const NAME_MATCH = new RegExp( "[^a-zA-Z0-9_]+" )
+
 interface RegistrationState {
-	loginError: string
+	nameError: string
 	passError: string
 	confrimPassError: string
 }
 
 class Registration extends React.Component {
-	private login: string = ""
+	private name: string = ""
 	private pass: string = ""
 	private confrimPass: string = ""
-	private loginMatch: RegExp = new RegExp( "[^a-zA-Z0-9_]+" )
 	public state: RegistrationState = {
-		loginError: "",
+		nameError: "",
 		passError: "",
 		confrimPassError: ""
 	}
@@ -30,7 +32,10 @@ class Registration extends React.Component {
 
 	OnPassChange( e: React.FormEvent<HTMLInputElement> ) {
 		this.pass = e.currentTarget.value
-		this.CheckPass()
+
+		if ( this.confrimPass ) {
+			this.CheckPassConfrim()
+		}
 	}
 
 	OnConfrimPassChange( e: React.FormEvent<HTMLInputElement> ) {
@@ -38,53 +43,41 @@ class Registration extends React.Component {
 		this.CheckPassConfrim()
 	}
 
-	OnLoginChange( e: React.FormEvent<HTMLInputElement> ) {
-		this.login = e.currentTarget.value
-		this.CheckLogin()
+	OnNameChange( e: React.FormEvent<HTMLInputElement> ) {
+		this.name = e.currentTarget.value
+		this.CheckName()
 	}
 
-	async CheckLoginTaken( e: React.FormEvent<HTMLInputElement> ) {
-		const data = await Post( "/api/auth/is_name_taken", { name: this.login } )
+	OnNameBlur( e: React.FormEvent<HTMLInputElement> ) {
+		this.CheckNameTaken()
+	}
 
-		if ( data.name !== this.login ) {
+	async CheckNameTaken() {
+		const data = await Post( "/api/auth/is_name_taken", { name: this.name } )
+
+		if ( data.name !== this.name ) {
 			return
 		}
 
-		if ( data.taken && this.CheckLogin() ) {
-			this.setState( { loginError: "Имя занято." } )
+		if ( data.taken && this.CheckName() ) {
+			this.setState( { nameError: "Имя занято." } )
 		}
 
-		//return data.taken
+		return data.taken
 	}
 
-	CheckLogin(): boolean {
-		let verified = !this.loginMatch.test( this.login )
+	CheckName(): boolean {
 		let error = ""
 
-		if ( this.login.length <= 0 ) {
-			error = "Необходимо ввести логин."
-			verified = false
-		} else if ( !verified ) {
+		if ( NAME_MATCH.test( this.name ) ) {
 			error = "Можно использовать только латинские символы, цифры и нижнее подчеркивание."
+		} else if ( this.name.length < NAME_LENGTH_MIN ) {
+			error = "Минимальная длина имени " + NAME_LENGTH_MIN + " символа"
 		}
 
-		this.setState( { loginError: error } )
+		this.setState( { nameError: error } )
 
-		return verified
-	}
-
-	CheckPass(): boolean  {
-		if ( this.confrimPass.length > 0 ) {
-			this.CheckPassConfrim()
-		}
-
-		const verified = this.pass.length <= AuthEnum.PASS_LEN
-
-		this.setState( {
-			passError: verified ? "" : "Пароль не должен превышать " + AuthEnum.PASS_LEN + " символа"
-		} )
-
-		return verified
+		return !!error
 	}
 
 	CheckPassConfrim(): boolean {
@@ -98,11 +91,17 @@ class Registration extends React.Component {
 	}
 
 	Register() {
-		if ( !this.pass || !this.confrimPass ) {
+		if (
+			!this.CheckName() ||
+			this.CheckNameTaken() ||
+			this.CheckPassConfrim()
+		) {
 			return
 		}
 
 		const passHash = PasswordHash( this.pass )
+
+		console.log( this.pass, passHash, passHash.length, "AHAHAH" )
 	}
 
 	render() {
@@ -112,12 +111,12 @@ class Registration extends React.Component {
 					<div className="overlay_header">Регистрация</div>
 					<input
 						className="input"
-						placeholder="Логин"
-						maxLength={AuthEnum.LOGIN_LEN}
-						onChange={this.OnLoginChange.bind( this )}
-						onBlur={this.CheckLoginTaken.bind( this )}
+						placeholder="Имя"
+						maxLength={NAME_LENGTH_MAX}
+						onChange={this.OnNameChange.bind( this )}
+						onBlur={this.OnNameBlur.bind( this )}
 					/>
-					<div className="error_warning">{this.state.loginError}</div>
+					<div className="error_warning">{this.state.nameError}</div>
 					<PasswordInput onChange={this.OnPassChange.bind( this )} />
 					<div className="error_warning">{this.state.passError}</div>
 					<input

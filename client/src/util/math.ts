@@ -1,4 +1,4 @@
-import md5 from "md5"
+import { createHash } from "crypto"
 
 export const RandomInt = ( min: number, max: number ): number => {
 	const d = max - min + 1
@@ -8,5 +8,5 @@ export const RandomInt = ( min: number, max: number ): number => {
 }
 
 export const PasswordHash = ( str: string ): string => {
-	return md5( str + "q2e4t53f4" )
+	return createHash( "sha512" ).update( str + "q2e4t53f4" ).digest( "hex" )
 }

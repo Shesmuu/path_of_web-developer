@@ -1,6 +1,25 @@
-.animelist {
+.anime_list {
 	margin: 0 auto;
+	max-width: 400px;
+	//display: flex;
+	//flex-direction: column;
+	//align-items: center;
+}
+
+.anime_row {
 	display: flex;
-	flex-direction: column;
 	align-items: center;
+	justify-content: center;
+}
+
+.anime_row a {
+	height: 50px;
+}
+
+.anime_row img {
+	height: 100%;
+}
+
+.anime_row .title {
+
 }
