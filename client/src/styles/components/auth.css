@@ -29,6 +29,7 @@
 	font-size: 1.3rem;
 }
 
+/*
 .auth_form .input, .auth_form .end_button {
 	margin-top: 0.4rem;
 	padding: 0.67rem;
@@ -61,6 +62,7 @@
 	align-items: center;
 	display: flex;
 }
+*/
 
 .auth_form .look_pass {
 	width: 1rem;

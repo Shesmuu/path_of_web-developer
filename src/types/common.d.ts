@@ -11,7 +11,7 @@ interface ServiceSettings {
 	express: Application
 	db: Connection
 	anime_list: ListAnime[]
-	validate: ( url: string, pattern: ValidatePattern ) => void
+	validate: ( url: string, pattern: Pattern ) => void
 }
 
 interface ListAnime {

@@ -41,6 +41,9 @@ body * {
 }
 
 .screen_scrolling {
+	align-items: center;
+	display: flex;
+	flex-direction: column;
 	overflow-y: auto;
 	scroll-margin-right: 4px;
 }
@@ -57,6 +60,8 @@ body * {
 .default_overlay {
 	padding: 1rem;
 	border-radius: 1rem;
+	background-color: white;
+	color: black;
 }
 
 .text_overlay {
@@ -106,7 +111,37 @@ body * {
 	font-size: 2rem;
 }
 
-.implict_input {
+.input, .end_button {
+	margin-top: 0.4rem;
+	padding: 0.67rem;
+	border-radius: 1.2rem;
+	min-height: 2.4rem;
+	width: 100%;
+}
+
+.input {
+	background-color: white;
+	color: var( --red0 );
+	box-sizing: border-box;
+	border: 1px solid black;
+}
+
+.end_button {
+	width: 100%;
+	background-color: var( --red0 );
+	font-family: var( --font-great );
+	border: none;
+	color: white;
+}
+
+.input .implict_input {
+	color: inherit;
+	flex: 1;
 	background-color: none;
 	border: none;
+}
+
+div.input {
+	align-items: center;
+	display: flex;
 }

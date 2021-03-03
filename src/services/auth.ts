@@ -40,7 +40,6 @@ const init = ( settings: ServiceSettings ) => {
 
 	express.post( "/api/auth/is_name_taken", async ( req: Request, res: Response ) => {
 		const taken = await is_name_taken( req.body.name )
-
 		res.send( { name: req.body.name, taken: taken } )
 	} )
 

@@ -1,12 +1,7 @@
 import { Request, Response } from "express"
 import { request_error } from "../util/common"
 
-const is_number_pattern = ( p: ValidatePattern ): p is NumberPattern => p.type === "number"
-const is_string_pattern = ( p: ValidatePattern ): p is StringPattern => p.type === "string"
-const is_array_pattern = ( p: ValidatePattern ): p is ArrayPattern => p.type === "array"
-const is_kv_pattern = ( p: ValidatePattern ): p is KVPattern => p.type === "kv"
-
-const validate = ( pattern: ValidatePattern, something: any, res: Response, my_paranoia: any[] ) => {
+const validate = ( pattern: Pattern, something: any, res: Response, my_paranoia: any[] ) => {
 	if ( pattern.optional && ( something === undefined || something === null ) ) {
 		return
 	}
@@ -21,22 +16,22 @@ const validate = ( pattern: ValidatePattern, something: any, res: Response, my_p
 		( something.toString ? something.toString() : "unknown" )
 	)
 
-	if ( is_number_pattern( pattern ) ) {
+	if ( pattern.type === PatternType.number ) {
 		if ( t !== "number" ) {
 			request_error( res, invalid_type_msg, 400 )
-		} else if ( pattern.length !== -1 && something.toString().length > pattern.length ) {
+		} else if ( pattern.max_length !== -1 && something.toString().length > pattern.max_length ) {
 			request_error( res, "Invalid number length, number: " + something, 400 )
 		}
-	} else if ( is_string_pattern( pattern ) ) {
+	} else if ( pattern.type === PatternType.string ) {
 		if ( t !== "string" ) {
 			request_error( res, invalid_type_msg, 400 )
 		} else if (
-			( pattern.length !== -1 && something.length > pattern.length ) ||
+			( pattern.max_length !== -1 && something.length > pattern.max_length ) ||
 			( pattern.min_length && something.length < pattern.min_length )
 		) {
 			request_error( res, "Invalid string length, string: " + something, 400 )
 		}
-	} else if ( is_array_pattern( pattern ) ) {
+	} else if ( pattern.type === PatternType.array ) {
 		if ( !Array.isArray( something ) ) {
 			request_error( res, invalid_type_msg, 400 )
 		}
@@ -48,7 +43,7 @@ const validate = ( pattern: ValidatePattern, something: any, res: Response, my_p
 		my_paranoia.push( something )
 
 		something.forEach( ( s: any ) => validate( pattern.content_pattern, s, res, my_paranoia ) )
-	} else if ( is_kv_pattern( pattern ) ) {
+	} else if ( pattern.type === PatternType.kv ) {
 		if ( t !== "object" || Array.isArray( something ) ) {
 			request_error( res, invalid_type_msg, 400 )
 		}
@@ -70,9 +65,9 @@ const validate = ( pattern: ValidatePattern, something: any, res: Response, my_p
 }
 
 const init = ( settings: ServiceSettings ) => {
-	const validations: { [key: string]: ValidatePattern } = {}
+	const validations: { [key: string]: Pattern } = {}
 
-	settings.validate = ( url: string, pattern: ValidatePattern ) => {
+	settings.validate = ( url: string, pattern: Pattern ) => {
 		validations[url] = pattern
 	}
 

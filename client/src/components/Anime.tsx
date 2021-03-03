@@ -16,15 +16,20 @@ interface AnimeState {
 
 const AnimeRow: React.FC<AnimeRowProps> = props => (
 	<div className="anime_row">
-		<a href={props.mal} rel="nofollow noopener noreferrer" target="_blank">
-			<img src={props.image} alt="" />
-		</a>
-		<div className="title">{props.title}</div>
-		<div className="score">{props.score}</div>
+		<div className="anime_image_title margin">
+			<a href={props.mal} rel="nofollow noopener noreferrer" target="_blank">
+				<img src={props.image} alt="" />
+			</a>
+			<div className="title">{props.title}</div>
+		</div>
+		<div className="score margin">
+			<div className="score_value">{props.score}</div>
+		</div>
 	</div>
 )
 
 class Anime extends React.Component {
+	private mounted: boolean = false
 	public state: AnimeState = {
 		list: []
 	}
@@ -32,31 +37,42 @@ class Anime extends React.Component {
 	async InitList() {
 		const list = await Get( "/api/anime_list" )
 
-		this.setState( { list: list } )
+		if ( this.mounted ) {
+			this.setState( { list: list } )
+		}
 	}
 
 	componentDidMount() {
+		this.mounted = true
 		this.InitList()
+	}
+
+	componentWillUnmount() {
+		this.mounted = false
 	}
 
 	render() {
 		return (
-			<div className="anime_list screen_scrolling">
-				<div>Мои оценочки с myanimelist.net</div>
-				{
-					this.state.list.map( ( a, i ) => <AnimeRow
-						key={i}
-						score={a.score}
-						title={a.title}
-						image={a.image}
-						mal={a.mal}
-					/> )
-				}
+			<div className="screen_scrolling anime_list">
+				<div>
+					<div className="head margin">Мои оценочки с myanimelist.net</div>
+					<div className="columns_head">
+						<div className="anime_head margin">Аниме</div>
+						<div className="score_head margin">Оценка</div>
+					</div>
+					{
+						this.state.list.map( ( a, i ) => <AnimeRow
+							key={i}
+							score={a.score}
+							title={a.title}
+							image={a.image}
+							mal={a.mal}
+						/> )
+					}
+				</div>
 			</div>
 		)
 	}
 }
-
-
 
 export default Anime

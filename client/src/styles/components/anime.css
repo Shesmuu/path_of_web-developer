@@ -1,25 +1,67 @@
 .anime_list {
-	margin: 0 auto;
-	max-width: 400px;
-	//display: flex;
-	//flex-direction: column;
-	//align-items: center;
+
 }
 
-.anime_row {
+.anime_list .margin {
+	margin: 2px;
+}
+
+.anime_list .head,
+.anime_list .anime_head,
+.anime_list .score_head {
+	display: block;
+	text-align: center;
+	background-color: var( --red-a0 );
+}
+
+.anime_list .columns_head,
+.anime_list .anime_row,
+.anime_list .anime_image_title {
 	display: flex;
+}
+
+.anime_list .anime_head,
+.anime_list .anime_image_title {
+	width: stretch;
+}
+
+.anime_list .score_head,
+.anime_list .score {
+	width: 64px;
+}
+
+.anime_list .anime_row {
+	max-height: 64px;
+}
+
+.anime_list .anime_image_title,
+.anime_list .score {
+	background-color: var( --grey-a0 );
+}
+
+.anime_list .anime_image_title {
 	align-items: center;
-	justify-content: center;
 }
 
-.anime_row a {
-	height: 50px;
-}
-
-.anime_row img {
+.anime_list a,
+.anime_list img {
 	height: 100%;
 }
 
-.anime_row .title {
-
+.anime_list a {
+	width: 64px;
+	overflow: hidden;
 }
+
+.anime_list .score {
+	align-items: center;
+	display: flex;
+}
+
+.anime_list .score_value {
+	margin: auto;
+}
+/*
+Лебедева Светлана Васильевна
+2368551	
+*/

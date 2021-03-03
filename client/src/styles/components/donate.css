@@ -1,0 +1,17 @@
+.donate .text_overlay {
+	max-width: 32rem;
+}
+
+.donate .content {
+	display: flex;
+}
+
+.donate .donate_form {
+	width: stretch;
+	display: flex;
+	flex-direction: column;
+}
+
+.donate .default_overlay {
+	margin: 4px;
+}

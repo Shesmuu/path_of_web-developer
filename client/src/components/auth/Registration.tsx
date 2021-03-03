@@ -77,6 +77,8 @@ class Registration extends React.Component {
 
 		this.setState( { nameError: error } )
 
+		console.log( !!error )
+
 		return !!error
 	}
 
@@ -90,10 +92,11 @@ class Registration extends React.Component {
 		return confrimed
 	}
 
-	Register() {
+	async Register() {
+		const taken = await this.CheckNameTaken()
+
 		if (
 			!this.CheckName() ||
-			this.CheckNameTaken() ||
 			this.CheckPassConfrim()
 		) {
 			return
@@ -101,7 +104,7 @@ class Registration extends React.Component {
 
 		const passHash = PasswordHash( this.pass )
 
-		console.log( this.pass, passHash, passHash.length, "AHAHAH" )
+		console.log( this.pass, passHash, passHash.length )
 	}
 
 	render() {
