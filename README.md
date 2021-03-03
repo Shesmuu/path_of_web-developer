@@ -1,1 +1,1 @@
-Just because
+This application is being developed for Full Stack practice. React App using a TypeScript is selected as a Front End. The Back End for processing requests and interacting with database is built with NodeJS using Express library and same TypeScript
